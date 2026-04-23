@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .game-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 18px;
+            width: 100px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #message {
+            margin: 20px 0;
+            font-size: 18px;
+            min-height: 30px;
+        }
+        #attempts {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <nav style="margin-bottom: 20px;">
+            <a href="fromScratch.html" style="color: #4CAF50; text-decoration: none; font-weight: bold;">← Back to Lacrosse Page</a>
+        </nav>
+        <h1>Number Guessing Game</h1>
+        <p>I'm thinking of a number between 1 and 10. Can you guess what it is?</p>
+        
+        <input type="number" id="guessInput" min="1" max="10" placeholder="Enter your guess">
+        <br>
+        <button onclick="makeGuess()">Guess!</button>
+        <button onclick="resetGame()">New Game</button>
+        
+        <div id="message"></div>
+        <div id="attempts">Attempts: 0</div>
+    </div>
+
+    <script>
+        let targetNumber;
+        let attempts = 0;
+
+        function initGame() {
+            targetNumber = Math.floor(Math.random() * 10) + 1;
+            attempts = 0;
+            document.getElementById('message').textContent = '';
+            document.getElementById('attempts').textContent = 'Attempts: 0';
+            document.getElementById('guessInput').value = '';
+        }
+
+        function makeGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            
+            if (isNaN(guess) || guess < 1 || guess > 10) {
+                document.getElementById('message').textContent = 'Please enter a number between 1 and 10!';
+                return;
+            }
+            
+            attempts++;
+            document.getElementById('attempts').textContent = `Attempts: ${attempts}`;
+            
+            if (guess === targetNumber) {
+                document.getElementById('message').textContent = `🎉 Congratulations! You guessed it in ${attempts} attempts!`;
+            } else if (guess < targetNumber) {
+                document.getElementById('message').textContent = 'Too low! Try a higher number.';
+            } else {
+                document.getElementById('message').textContent = 'Too high! Try a lower number.';
+            }
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        // Initialize the game when the page loads
+        window.onload = initGame;
+    </script>
+</body>
+</html>
